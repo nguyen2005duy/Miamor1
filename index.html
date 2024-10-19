@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="t.css">
+    <link rel="stylesheet" href="t2.css">
+    <style>
+        /* Additional CSS styles for background and body */
+        body {
+            margin: 0;
+            height: 100vh; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #5C4B8A; 
+            overflow: hidden; 
+            color: white; 
+            font-family: Arial, sans-serif; 
+        }
+
+        /* Overlay styles */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .click-me {
+            font-size: 48px;
+            color: rgb(255, 182, 193);
+            cursor: pointer; 
+            text-align: center;
+        }
+
+        .content {
+            text-align: center;
+            font-size: 24px;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .spark {
+            position: absolute;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+    </style>
+</head>
+
+<body>
+   
+    <div id="overlay">
+        <div class="click-me">click vô nha <3</div>
+    </div>
+
+    <audio id="background-audio" loop autoplay muted>
+        <source src="music.mp3" type="audio/mpeg"> 
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="content">1 , 2 ,3 ,4 ,5 , 6, 7, 8, 9 ,10. MY BABY I LOVE YOU SO MUCH FOREVER YOU AND I
+        !!! I LOVE YOU OH I LOVE YOU SO MUCH FOREVER YOU AND I
+    </div>
+
+    <div id="heart" hidden>
+        <div class="spark spark-1">
+            <svg viewBox="0 0 32 29.6" width="80px" fill="#fff">
+                <path d="M23.4,0c-3.3,0-6.1,1.8-7.4,4.5C14.7,1.8,11.9,0,8.6,0C3.8,0,0,3.9,0,8.8c0,7.3,11.2,12.3,15.3,20.5C20.5,21.1,32,15.6,32,8.8 C32,3.9,28.2,0,23.4,0z" />
+            </svg>
+        </div>
+        <div class="spark spark-2">
+            <svg viewBox="0 0 32 29.6" width="80px" fill="#fff">
+                <path d="M23.4,0c-3.3,0-6.1,1.8-7.4,4.5C14.7,1.8,11.9,0,8.6,0C3.8,0,0,3.9,0,8.8c0,7.3,11.2,12.3,15.3,20.5C20.5,21.1,32,15.6,32,8.8 C32,3.9,28.2,0,23.4,0z" />
+            </svg>
+        </div>
+        <div class="spark spark-3">
+            <svg viewBox="0 0 32 29.6" width="80px" fill="#fff">
+                <path d="M23.4,0c-3.3,0-6.1,1.8-7.4,4.5C14.7,1.8,11.9,0,8.6,0C3.8,0,0,3.9,0,8.8c0,7.3,11.2,12.3,15.3,20.5C20.5,21.1,32,15.6,32,8.8 C32,3.9,28.2,0,23.4,0z" />
+            </svg>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // Function to create hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'spark';
+            heart.innerHTML = `
+                <svg viewBox="0 0 32 29.6" width="80px" fill="#fff">
+                    <path d="M23.4,0c-3.3,0-6.1,1.8-7.4,4.5C14.7,1.8,11.9,0,8.6,0C3.8,0,0,3.9,0,8.8c0,7.3,11.2,12.3,15.3,20.5C20.5,21.1,32,15.6,32,8.8 C32,3.9,28.2,0,23.4,0z" />
+                </svg>
+            `;
+            heart.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+            heart.style.bottom = '0'; // Start from the bottom
+            heart.style.opacity = '1'; // Set initial opacity
+            document.getElementById('heart').appendChild(heart);
+
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 4000); // Remove after 4 seconds
+        }
+
+        // Click event to trigger heart creation and audio playback
+        document.body.onclick = () => {
+            // Hide the overlay
+            document.getElementById('overlay').style.display = 'none';
+
+            // Show the content text
+            document.querySelector(".content").style.display = "block"; // Show the text
+            document.querySelector("#heart").hidden = false;
+            document.querySelector("body").style.backgroundColor = "#542246";
+            fadeIn();
+            playAudio();
+            // Create hearts on click
+            createHeart(); // Call createHeart once when clicked
+            setInterval(createHeart, 1000); // Start interval after the first click
+        }
+
+        // Function to fade in text
+        function fadeIn() {
+            var text = $('.content').text().replace(/^\s+|\s+$/g, '');
+            var length = text.length;
+            var i = 0;
+            var txt;
+            var html = [];
+            var sp = 4;
+            for (; i < length; i += sp) {
+                txt = text.substring(i, i + sp);
+                html.push('<span class="c animated">' + txt + '</span>');
+            }
+            $('.content').removeClass('c').html(html.join(''));
+
+            for (i = 0, length = html.length; i < length; i++) {
+                !function (i) {
+                    setTimeout(function () {
+                        $('.content').find('.animated').eq(i).addClass('fadeIn');
+                    }, i * 400);
+                }(i);
+            }
+        }
+
+        // Function to play audio
+        function playAudio() {
+            var audio = document.getElementById('background-audio');
+            audio.muted = false; 
+            audio.play(); 
+        }
+    </script>
+</body>
+
+</html>
